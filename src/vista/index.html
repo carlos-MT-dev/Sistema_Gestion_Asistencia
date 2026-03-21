@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GLOPSA UI</title>
+    <link rel="stylesheet" href="../vista/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h1>GLOPSA</h1>
+          <span>GESTIÓN CORPORATIVA</span>
+        </div>
+
+        <form method="POST" class="" id="form_filtros">
+          <div class="form-group">
+            <label>Fecha inicio</label>
+            <input
+              type="date"
+              id="Fecha_inicio"
+              name="Fecha_inicio"
+              class="busqueda"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Fecha límite</label>
+            <input
+              type="date"
+              id="Fecha_finalizacion"
+              name="Fecha_finalizacion"
+              class="busqueda"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="label-filtro"> Area </label>
+
+            <select
+              id="cbb_filtro_area"
+              class="cbb-form"
+              name="cbb_filtro_area"
+              type="text"
+            >
+              <option value="2">RRHH</option>
+              <option value="3">Soporte</option>
+              <option value="4">Supervisores</option>
+              <option value="5">Mantenimiento</option>
+              <option value="6">Asesores</option>
+              <option value="7">Backoffice</option>
+              <option value="8">Jefe de operaciones</option>
+              <option value="9">prac. Soporte</option>
+              <option value="11">prac. Recursos</option>
+            </select>
+          </div>
+          
+        </form>
+        <button type="button" id="btn_filtrar_fecha" class="btn">Buscar</button>
+        
+        
+        <button
+          type="button"
+          id="btn_gestion_usuarios"
+          class="btn btn_gestion_usuarios"
+        >Gestionar Usuarios
+        </button>
+
+
+        <button
+          type="button"
+          id="btn_reportes_asistencias"
+          class="btn btn_gestion_reportes"
+        > Generar Reporte
+        </button>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Title del contenido de la tabla -->
+        <div class="main-title-table">
+          <h1>Tabla de</h1>
+          <h1>Asistencias</h1>
+        </div>
+
+        <!-- contenedor de la tabla -->
+        <div class="table-container">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Fecha</th>
+                <th>Hora de Punch</th>
+                <th>Estado de Asistencia</th>
+                <th>Descuento</th>
+                
+              </tr>
+            </thead>
+
+            <tbody id="employeeTableBody"></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <script
+      type="module"
+      src="../controlador/get_employee_asistence.js"
+    ></script>
+    <!-- <script type="module" src="../controlador/filtrar_fecha.js"></script> -->
+     <script type="module" src="../controlador/funcion_filtro_multiple.js"></script>
+  </body>
+</html>
