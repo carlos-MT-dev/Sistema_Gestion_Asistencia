@@ -16,6 +16,7 @@ router.post("/employee_asistencia/filtrada", async (req, res) => {
 
     // console.log(resultados);
     res.json(resultados);
+    console.log("Datos filtrados:", resultados);
   } catch (error) {
     console.error("Error al obtener asistencia filtrada:", error);
     res.status(500).json({ error: "Error interno del servidor" });

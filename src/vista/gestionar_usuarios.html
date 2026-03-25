@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GLOPSA - Gestión de Usuarios</title>
+    <link rel="stylesheet" href="../vista/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h1>GLOPSA</h1>
+          <span>GESTIÓN CORPORATIVA</span>
+        </div>
+
+        <form method="POST" id="form_filtros_detalle_usuarios">
+          <div class="form-group">
+            <label>Fecha inicio</label>
+            <input type="date" id="Fecha_inicio" name="Fecha_inicio_detalle" class="busqueda"/>
+          </div>
+
+          <div class="form-group">
+            <label>Fecha límite</label>
+            <input type="date" id="Fecha_finalizacion" name="Fecha_finalizacion_detalle" class="busqueda"/>
+          </div>
+
+          <div class="form-group">
+            <label class="label-filtro">Área</label>
+            <select id="cbb_filtro_area_1" class="cbb-form" name="cbb_filtro_area_detalle">
+              <option value="2">RRHH</option>
+              <option value="3">Soporte</option>
+              <option value="4">Supervisores</option>
+              <option value="5">Mantenimiento</option>
+              <option value="6">Asesores</option>
+              <option value="7">Backoffice</option>
+              <option value="8">Jefe de operaciones</option>
+              <option value="9">prac. Soporte</option>
+              <option value="11">prac. Recursos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="label-filtro">Empleado</label>
+            <select id="cbb_filtro_area_2" class="cbb-form" name="cbb_filtro_area_empleado_detalle">
+              <option value="0">Seleccionar</option>
+            </select>
+          </div>
+        </form>
+
+        <button type="button" id="btn_filtrar_fecha_detalle_usuarios" class="btn">Procesar</button>
+        <button type="button" id="btn_gestion_usuarios" class="btn btn_gestion_usuarios">Atrás</button>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Title del contenido de la tabla -->
+        <div class="main-title-table_detalle_usuarios">
+          <h1>Detalle General</h1>
+        </div>
+
+        <!-- Tabla principal -->
+        <div class="table-container" id="tabla_principal_detalle_usuarios">
+          <table class="tabla" >
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Fecha</th>
+                <th>Hora de Punch</th>
+                <th>Estado de Asistencia</th>
+                <th>Descuento</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody"></tbody>
+          </table>
+        </div>
+  <br>
+         <div class="main-title-table_detalle_usuarios">
+          <h1>Adicional</h1>
+        </div>
+
+        <!-- Tabla secundaria debajo de la principal -->
+        <div class="table-container" id="tabla_detalle_subtotal_container">
+          <table class="tabla" id="tabla_detalle_subtotal">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Total tardanzas</th>
+                <th>Total desc.</th>
+                
+              </tr>
+            </thead>
+            <tbody id="employeeTableBodySubtotal"></tbody>
+          </table>
+        </div>
+
+      </main>
+    </div>
+
+    <script type="module" src="../controlador/get_employee_asistence.js"></script>
+    <script type="module" src="../controlador/funcion_filtro_multiple_detalle.js"></script>
+    <script type="module" src="../controlador/funcion_agregar_listaEmpleados_detalle.js"></script>
+  </body>
+</html>

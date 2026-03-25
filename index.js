@@ -2,8 +2,12 @@ import express from "express";
 import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
+
 import getEmployeeAsistenceRouter from "./src/routes/get_employee_asistence_table.js";
 import getEmployeeAsistenceFilteredRouter from "./src/routes/get_employee_asistence_table_filtered.js";
+import getEmployeeAsistenceFilteredRouterDetalle from "./src/routes/get_employee_asistence_table_filtered_detalle.js";
+import setEstadoDescuento from "./src/query/set_estadoEntrada_descuento.js";
+import getAllEmployeeRouter from "./src/routes/get_employee_list.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,14 +32,40 @@ app.use(
 
 app.use(express.static(path.join(__dirname, "src")));
 
-
 // ruta base
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "src/vista/index.html"));
-})
+  res.sendFile(path.join(__dirname, "src/vista/index.html"));
+});
 
 app.use(getEmployeeAsistenceRouter);
 app.use(getEmployeeAsistenceFilteredRouter);
+app.use(getEmployeeAsistenceFilteredRouterDetalle);
+app.use(getAllEmployeeRouter);
+
+//
+// 🔥 EJECUCIÓN INICIAL
+//
+(async () => {
+  try {
+   await setEstadoDescuento();
+    console.log("Proceso automático ejecutado al iniciar el servidor.");
+  } catch (error) {
+    console.error("Error en ejecución inicial:", error);
+  }
+})();
+
+//
+// 🔥 EJECUCIÓN CADA 8 HORAS
+//
+setInterval(async () => {
+  try {
+    console.log("Ejecutando proceso automático...");
+    await setEstadoDescuento();
+    console.log("Proceso automático ejecutado correctamente.");
+  } catch (error) {
+    console.error("Error en proceso automático:", error);
+  }
+}, 28800000);
 
 app.listen(app.get("port"), "0.0.0.0", () => {
   console.log("Server running on http://localhost:" + app.get("port"));

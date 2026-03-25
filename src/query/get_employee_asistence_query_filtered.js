@@ -7,25 +7,41 @@ async function getAllEmployeeAsistenceFiltrado(FechaInicio, FechaFin, area) {
   let valores = [paramFechaInicio, paramFechaFin];
 
   let sql = `
+ SELECT 
+  p.first_name,
+  p.emp_code,
+  t.punch_time,
+  p.position_id,
+  p.horaMaxEntrada,
+  p.horaMaxEntradaFinSemana,
+  t.entrada_estado,
+  t.descuento
+FROM personnel_employee p
+INNER JOIN iclock_transaction t 
+  ON p.emp_code = t.emp_code
+INNER JOIN (
     SELECT 
-      p.first_name,
-      p.emp_code,
-      t.punch_time,
-      p.position_id,
-      p.horaMaxEntrada,
-      p.horaMaxEntradaFinSemana
-    FROM personnel_employee p
-    INNER JOIN iclock_transaction t 
-      ON p.emp_code = t.emp_code
-    WHERE t.punch_time BETWEEN ? AND ?
+        emp_code,
+        DATE(punch_time) AS fecha,
+        MIN(punch_time) AS primer_punch
+    FROM iclock_transaction
+    WHERE punch_time BETWEEN ? AND ?
+    GROUP BY emp_code, DATE(punch_time)
+) AS first_punch
+ON t.emp_code = first_punch.emp_code
+AND DATE(t.punch_time) = first_punch.fecha
+AND t.punch_time = first_punch.primer_punch
+WHERE 1=1
   `;
 
+  // 👇 filtros dinámicos
   if (area) {
     sql += " AND p.position_id = ?";
-    valores.push(area); 
+    valores.push(area);
   }
 
-  sql += " ORDER BY t.punch_time ASC";
+  // 👇 SIEMPRE al final
+  sql += " ORDER BY p.first_name ASC, t.punch_time ASC";
 
   const [rows] = await connection.query(sql, valores);
   return rows;
