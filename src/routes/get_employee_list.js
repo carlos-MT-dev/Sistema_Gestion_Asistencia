@@ -2,10 +2,10 @@ import express from "express";
 const router = express.Router();
 import getAllEmployee from "../query/get_employee_list.js";
 
-router.get("/employee_list", async (req, res) => {
+router.get("/employee_list/:id", async (req, res) => {
   try {
-    
-    const resultados = await getAllEmployee();
+    const { id } = req.params;
+    const resultados = await getAllEmployee(id);
     res.json(resultados);
 
   } catch (error) {

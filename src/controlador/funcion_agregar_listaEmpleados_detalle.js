@@ -1,36 +1,53 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const response = await fetch("/employee_list");
+  const cbbArea = document.getElementById("cbb_filtro_area_1");
 
-    if (!response.ok) {
-      console.error("Error al obtener la lista de empleados:", response.status);
+  cbbArea.addEventListener("change", async () => {
+    let valorArea = cbbArea.value;
+
+    if (!valorArea) {
+      console.warn("No se seleccionó área");
       return;
     }
 
-    const data = await response.json();
+    try {
+      const response = await fetch(`/employee_list/${valorArea}`);
 
-    const idSelect = "cbb_filtro_area_2";
-    const id = "emp_code";
-    const campo = "first_name";
+      if (!response.ok) {
+        console.error("Error al obtener empleados:", response.status);
+        return;
+      }
 
-    const select = document.getElementById(idSelect);
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        console.error("Respuesta no válida (no JSON)");
+        return;
+      }
 
-    if (!select) {
-      console.warn(`Elemento #${idSelect} no encontrado`);
-      return;
+      if (!data || data.length === 0) {
+        console.warn("No se encontraron empleados para el área seleccionada");
+        return;
+      }
+
+      const select = document.getElementById("cbb_filtro_area_2");
+
+      if (!select) {
+        console.warn("Select no encontrado");
+        return;
+      }
+
+      select.innerHTML = `<option value="">SELECCIONAR</option>`;
+
+      data.forEach((item) => {
+        const opt = document.createElement("option");
+        opt.value = item.emp_code;
+        opt.textContent = item.first_name;
+        opt.setAttribute("data-position-id", item.position_id);
+        select.appendChild(opt);
+      });
+    } catch (error) {
+      console.error("Error en fetch:", error);
     }
-
-    // LIMPIAR SELECT
-    select.innerHTML = `<option value="">SELECCIONAR</option>`;
-
-    // Insertar opciones
-    data.forEach((item) => {
-      const opt = document.createElement("option");
-      opt.value = item[id];
-      opt.textContent = item[campo];
-      select.appendChild(opt);
-    });
-  } catch (error) {
-    console.error("Error en fetch:", error);
-  }
+  });
 });
