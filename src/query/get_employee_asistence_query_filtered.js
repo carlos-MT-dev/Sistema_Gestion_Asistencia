@@ -1,13 +1,13 @@
 import connection from "../conexion/conexion_msql2.js";
 
-async function getAllEmployeeAsistenceFiltrado(FechaInicio, FechaFin, area) {
+async function getAllEmployeeAsistenceFiltrado(FechaInicio, FechaFin, area, empleado) {
   const paramFechaInicio = `${FechaInicio} 00:00:00.000`;
   const paramFechaFin = `${FechaFin} 23:59:59.000`;
 
   let valores = [paramFechaInicio, paramFechaFin];
 
   let sql = `
- SELECT 
+ SELECT   
   p.first_name,
   p.emp_code,
   t.punch_time,
@@ -34,13 +34,17 @@ AND t.punch_time = first_punch.primer_punch
 WHERE 1=1
   `;
 
-  // 👇 filtros dinámicos
+  
   if (area) {
     sql += " AND p.position_id = ?";
     valores.push(area);
   }
 
-  // 👇 SIEMPRE al final
+  if (empleado) {
+   sql += " AND p.emp_code = ?";
+   valores.push(empleado);
+  }
+
   sql += " ORDER BY p.first_name ASC, t.punch_time ASC";
 
   const [rows] = await connection.query(sql, valores);

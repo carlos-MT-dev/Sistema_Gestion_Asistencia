@@ -5,10 +5,11 @@ import getDescuentoTardanzas from "../query/get_count_tardanzas_descuento.js";
 
 
 router.post("/employee_asistencia/filtrada/detalle", async (req, res) => {
-  let  {
+  let {
     Fecha_inicio_detalle,
     Fecha_finalizacion_detalle,
     cbb_filtro_area_detalle,
+    cbb_filtro_area_empleado_detalle,
   } = req.body;
 
   try {
@@ -16,12 +17,14 @@ router.post("/employee_asistencia/filtrada/detalle", async (req, res) => {
       Fecha_inicio_detalle,
       Fecha_finalizacion_detalle,
       cbb_filtro_area_detalle,
+      cbb_filtro_area_empleado_detalle,
     );
 
     let resDescTardanzas = await getDescuentoTardanzas(
       Fecha_inicio_detalle,
       Fecha_finalizacion_detalle,
       cbb_filtro_area_detalle,
+      cbb_filtro_area_empleado_detalle,
     );
 
     // console.log(resultados);
