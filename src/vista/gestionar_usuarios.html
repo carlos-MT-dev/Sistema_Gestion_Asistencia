@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>GLOPSA - Gestión de Usuarios</title>
     <link rel="stylesheet" href="../vista/style.css" />
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -36,7 +37,7 @@
               <option value="6">ASESOR</option>
               <option value="7">BACKOFFICE</option>
               <option value="8">JEFE DE OPERACIONES</option>
-              <option value="9">PRACT. SOPORTE</option>
+              <option value="9">PRACT. SOPORTE</option> 
               <option value="11">PRACT. RECURSOS</option>
             </select>
           </div>
@@ -50,7 +51,12 @@
         </form>
 
         <button type="button" id="btn_filtrar_fecha_detalle_usuarios" class="btn">Procesar</button>
-        <button type="button" id="btn_gestion_usuarios" class="btn btn_gestion_usuarios">Atrás</button>
+        <button type="button" id="btn_exportar_reporte_general" class="btn">Reporte General 📊</button>
+        <button type="button" id="btn_exportar_reporte_descuento" class="btn">Reporte Descuento 📊</button>
+
+
+        <button type="button" id="btn_atras_gestion_usuarios" class="btn btn_gestion_usuarios">Atrás</button>
+
       </aside>
 
       <!-- Main Content -->
@@ -78,7 +84,7 @@
         </div>
   <br>
          <div class="main-title-table">
-          <h1>Adicional</h1>
+          <h1>Detalle por usuario</h1>
         </div>
 
         <!-- Tabla secundaria debajo de la principal -->
@@ -103,5 +109,8 @@
     <script type="module" src="../controlador/get_employee_asistence.js"></script>
     <script type="module" src="../controlador/funcion_filtro_multiple_detalle.js"></script>
     <script type="module" src="../controlador/funcion_agregar_listaEmpleados_detalle.js"></script>
+    <script type="module" src="../controlador/btn_atras_gestion_usuario.js"></script>
+
+    </script:type>
   </body>
 </html>

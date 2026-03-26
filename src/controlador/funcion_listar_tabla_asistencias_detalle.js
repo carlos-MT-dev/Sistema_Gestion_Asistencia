@@ -8,6 +8,8 @@ function ListarTablaDetalle(data, tableBody) {
 
     const row = document.createElement("tr");
 
+
+    
     const nameCell = document.createElement("td");
     nameCell.textContent = element.first_name;
 

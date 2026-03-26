@@ -30,33 +30,18 @@ app.use(
   }),
 );
 
-app.use(express.static(path.join(__dirname, "src")));
 
-// ruta base
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "src/vista/index.html"));
-});
-
-app.use(getEmployeeAsistenceRouter);
-app.use(getEmployeeAsistenceFilteredRouter);
-app.use(getEmployeeAsistenceFilteredRouterDetalle);
-app.use(getAllEmployeeRouter);
-
-//
-// 🔥 EJECUCIÓN INICIAL
-//
+// SETEA LOS VALORES DE DESCUENTO AUTOMATICAMENTE AL INICIAL EL SERVIDOR
 (async () => {
   try {
-   await setEstadoDescuento();
+    await setEstadoDescuento();
     console.log("Proceso automático ejecutado al iniciar el servidor.");
   } catch (error) {
     console.error("Error en ejecución inicial:", error);
   }
 })();
 
-//
-// 🔥 EJECUCIÓN CADA 8 HORAS
-//
+
 setInterval(async () => {
   try {
     console.log("Ejecutando proceso automático...");
@@ -65,8 +50,26 @@ setInterval(async () => {
   } catch (error) {
     console.error("Error en proceso automático:", error);
   }
-}, 28800000);
+}, 1800000);
 
+// FIN DE LA EJECUCION AUTOMATICA DE DESCUENTO
+
+//RUTA BASE PARA SERVIR ARCHIVOS ESTATICOS
+app.use(express.static(path.join(__dirname, "src")));
+
+// RUTA BASE
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "src/vista/index.html"));
+});
+
+//RUTAS PROVENIENTES DE LOS ROUTERS
+app.use(getEmployeeAsistenceRouter);
+app.use(getEmployeeAsistenceFilteredRouter);
+app.use(getEmployeeAsistenceFilteredRouterDetalle);
+app.use(getAllEmployeeRouter);
+
+
+// CONFIGURACION DE PUERTO Y ARRANQUE DEL SERVIDOR
 app.listen(app.get("port"), "0.0.0.0", () => {
   console.log("Server running on http://localhost:" + app.get("port"));
 });
