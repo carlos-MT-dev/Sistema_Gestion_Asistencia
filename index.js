@@ -8,6 +8,8 @@ import getEmployeeAsistenceFilteredRouter from "./src/routes/get_employee_asiste
 import getEmployeeAsistenceFilteredRouterDetalle from "./src/routes/get_employee_asistence_table_filtered_detalle.js";
 import setEstadoDescuento from "./src/query/set_estadoEntrada_descuento.js";
 import getAllEmployeeRouter from "./src/routes/get_employee_list.js";
+import validarEstadoMensajeWsap from "./src/routes/wsap/validar_estado_mensaje.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,6 +69,7 @@ app.use(getEmployeeAsistenceRouter);
 app.use(getEmployeeAsistenceFilteredRouter);
 app.use(getEmployeeAsistenceFilteredRouterDetalle);
 app.use(getAllEmployeeRouter);
+app.use(validarEstadoMensajeWsap);
 
 
 // CONFIGURACION DE PUERTO Y ARRANQUE DEL SERVIDOR

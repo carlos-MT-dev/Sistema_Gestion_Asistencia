@@ -4,7 +4,8 @@ function ListarTablas(data, tableBody) {
 
 
 
-  data.forEach((element) => {
+  data.forEach(async (element) => {
+   
     let formatearHora = element.punch_time.split(" ")[1].split(".")[0];
     let formatearFecha = element.punch_time.split(" ")[0];
 
